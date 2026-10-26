@@ -1,59 +1,63 @@
-# HashbrownDecisionsDemo
+# Flight Desk: decision models with Hashbrown
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.2.3.
+A small Angular app that shows three ways to use a decision model with
+[Hashbrown](https://hashbrown.dev) 0.8. It's the companion to the blog post
+[Decision Models with Hashbrown: Decide, Then Generate](https://hashbrown.dev/blog/2026-10-27-decision-models-with-hashbrown).
 
-## Development server
+This is a local demo. It is not deployed, and the server has no authentication.
 
-To start a local development server, run:
+| Step | Hashbrown API | What it shows |
+| --- | --- | --- |
+| 1. Route a message | `decisionResource()` | Three questions about one message (an enumeration, a yes or no, and a 1 to 5 score), answered as you type, plus a pure `routeAction()` policy |
+| 2. Pick a view | `uiDecisionResource()` in candidates mode | The model picks one of three app-built views; the app supplies every prop |
+| 3. Narrow a chat | `uiDecisionResource()` in chat mode | Before each message, a decision picks which cards the chat may render |
 
-```bash
-ng serve
+![Step 1: routing a frustrated traveller to a person](docs/screenshots/01-route-escalate.png)
+
+## Run it
+
+You need Node.js 24, an [OpenAI](https://platform.openai.com) API key and a
+[TypeSafe](https://typesafe.ai) API key.
+
+```sh
+npm install
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Create `.env` in the project root (it's in `.gitignore`):
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+```sh
+OPENAI_API_KEY=your-openai-key
+OPENAI_MODEL=gpt-5-mini
+TYPESAFE_API_KEY=your-typesafe-key
+TYPESAFE_MODEL=jev-1.14.0
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Start the server and the app in two terminals:
 
-```bash
-ng generate --help
+```sh
+npm run server
 ```
 
-## Building
-
-To build the project run:
-
-```bash
-ng build
+```sh
+npm start
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Open http://localhost:4200. The Angular dev server proxies `/api` to the
+server on port 3001.
 
-## Running unit tests
+## Where to look
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+- `shared/decisions.ts`: every decision's questions and context. The browser
+  and the server import the same file, so the server can pin them.
+- `shared/route-action.ts`: the app's policy for the router's answer, as a
+  pure function.
+- `src/app/route-panel.ts`: `decisionResource()`.
+- `src/app/view-panel.ts`: `uiDecisionResource()` with `candidates`.
+- `src/app/chat-panel.ts`: `uiChatResource()` with browser tools, and
+  `uiDecisionResource()` with `chat`.
+- `server/server.ts`: `/api/decide/:kind` with `HashbrownTypeSafe.decide`, and
+  `/api/chat` with `HashbrownOpenAI`.
 
-```bash
-ng test
-```
+## Screenshots
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+`docs/screenshots` has every step, captured from live models.

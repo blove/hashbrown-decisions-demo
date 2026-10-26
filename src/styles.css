@@ -1,1 +1,121 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --ink: #1d2433;
+  --muted: #667085;
+  --line: #e4e7ec;
+  --surface: #ffffff;
+  --page: #f6f4ef;
+  --accent: #e8a23a;
+  --accent-ink: #7a4b07;
+  --go: #2f7d4f;
+  --alert: #b42318;
+  --radius: 14px;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: var(--ink);
+  background: var(--page);
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; padding: 32px 16px 64px; }
+app-root { display: block; max-width: 980px; margin: 0 auto; }
+code, pre { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; }
+
+.masthead { display: flex; align-items: baseline; gap: 12px; margin-bottom: 20px; }
+.masthead h1 { margin: 0; font-size: 28px; letter-spacing: -0.02em; }
+.masthead p { margin: 0; color: var(--muted); }
+
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px; }
+.steps button {
+  display: flex; gap: 12px; align-items: center; text-align: left;
+  padding: 12px 14px; border: 1px solid var(--line); border-radius: var(--radius);
+  background: var(--surface); color: inherit; font: inherit; cursor: pointer;
+}
+.steps button span:last-child { display: grid; gap: 2px; }
+.steps button code { color: var(--muted); }
+.steps button[aria-selected='true'] { border-color: var(--accent); box-shadow: 0 0 0 3px #e8a23a33; }
+.step-number {
+  display: grid; place-items: center; width: 28px; height: 28px; flex: none;
+  border-radius: 50%; background: var(--page); font-weight: 700;
+}
+[aria-selected='true'] .step-number { background: var(--accent); color: #fff; }
+
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; }
+
+.field { display: grid; gap: 8px; flex: 1; font-weight: 600; font-size: 14px; }
+.field textarea, .field input, .field-row input {
+  font: inherit; font-weight: 400; font-size: 16px; padding: 12px 14px;
+  border: 1px solid var(--line); border-radius: 10px; resize: vertical; width: 100%;
+}
+.field-row { display: flex; gap: 10px; align-items: end; }
+.primary {
+  font: inherit; font-weight: 600; padding: 12px 18px; border: 0; border-radius: 10px;
+  background: var(--ink); color: #fff; cursor: pointer; white-space: nowrap;
+}
+.primary:disabled { opacity: 0.4; cursor: default; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 20px; }
+.chip {
+  font: inherit; font-size: 13px; padding: 6px 12px; border-radius: 999px;
+  border: 1px solid var(--line); background: var(--page); color: var(--ink); cursor: pointer;
+}
+
+.result { display: grid; gap: 16px; }
+.badge {
+  display: flex; gap: 12px; align-items: center; padding: 14px 16px;
+  border-radius: 12px; border: 1px solid var(--line); font-size: 17px;
+}
+.badge[data-tone='go'] { border-color: #2f7d4f55; background: #2f7d4f0d; }
+.badge[data-tone='go'] strong { color: var(--go); }
+.badge[data-tone='alert'] { border-color: #b4231855; background: #b423180d; }
+.badge[data-tone='alert'] strong { color: var(--alert); }
+.badge[data-tone='unsure'] { border-style: dashed; }
+.muted { color: var(--muted); font-size: 14px; }
+
+.charts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.probabilities { margin: 0; display: grid; gap: 6px; align-content: start; }
+.probabilities figcaption { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 4px; }
+.probability { display: grid; grid-template-columns: 96px 1fr 40px; gap: 8px; align-items: center; font-size: 13px; }
+.probability-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.probability-track { height: 8px; border-radius: 4px; background: var(--page); overflow: hidden; }
+.probability-bar { display: block; height: 100%; background: #c9ced6; border-radius: 4px; transition: width 200ms; }
+.probability.chosen .probability-bar { background: var(--accent); }
+.probability.chosen .probability-label { font-weight: 700; }
+.probability-value { font-variant-numeric: tabular-nums; text-align: right; color: var(--muted); }
+
+details summary { cursor: pointer; color: var(--muted); font-size: 13px; }
+pre { background: var(--page); padding: 12px; border-radius: 10px; }
+
+.split { display: grid; grid-template-columns: 1fr 260px; gap: 24px; align-items: start; }
+.stage { min-height: 200px; }
+.view h3 { margin: 0 0 12px; font-size: 16px; }
+.view table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.view td { padding: 8px 6px; border-top: 1px solid var(--line); }
+.price { font-weight: 700; text-align: right; }
+.hero { background: var(--page); border-radius: 12px; padding: 24px; text-align: center; }
+.eyebrow { margin: 0; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+.big { margin: 4px 0; font-size: 48px; font-weight: 800; color: var(--accent-ink); }
+.calendar { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+.calendar-day { display: grid; gap: 6px; padding: 10px 6px; border-radius: 10px; background: var(--page); text-align: center; font-size: 12px; }
+.calendar-day strong { font-size: 16px; }
+.calendar-day.best { background: #e8a23a22; outline: 2px solid var(--accent); }
+
+.transcript { display: grid; gap: 12px; }
+.bubble { margin: 0; max-width: 90%; }
+.bubble.user { justify-self: end; background: var(--ink); color: #fff; padding: 10px 14px; border-radius: 14px 14px 4px 14px; }
+.bubble.assistant { display: grid; gap: 10px; }
+.bubble.assistant p { margin: 0; }
+.card { border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; display: grid; gap: 4px; max-width: 360px; margin-top: 10px; }
+.card header { display: flex; justify-content: space-between; }
+.card p { margin: 0; }
+.status { font-size: 12px; font-weight: 700; text-transform: uppercase; }
+.status[data-status='delayed'] { color: var(--alert); }
+.status[data-status='confirmed'] { color: var(--go); }
+
+.spinner {
+  display: inline-block; width: 12px; height: 12px; border-radius: 50%;
+  border: 2px solid var(--line); border-top-color: var(--accent); animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 720px) {
+  .steps, .charts, .split { grid-template-columns: 1fr; }
+}
